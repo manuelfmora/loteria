@@ -9,9 +9,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Menú</title>      
+        <link rel="stylesheet" type="text/css" href="assets/style.css" media="screen" />
     </head>
     <body>
-        <h1>Hello World JSP Page!</h1>
-    </body>
+    <center>
+        <h1><u>MENÚ</u></h1>
+        <li><a href="Texto.jsp">Modo Texto</a></li>
+        <li><a href="Grafico.jsp">Modo Gráfico</a></li>
+        <li><a href="LogOut">Cerrar Sesión</a></li>
+    </center>
+
+</body>
 </html>
