@@ -8,11 +8,14 @@ package LoteriaPackage;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.util.ArrayList;
+import java.util.Random;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.el.lang.FunctionMapperImpl;
 
 /**
  *
@@ -40,16 +43,11 @@ public class LoteriaTexto extends HttpServlet {
         
           //Variables
         int numboleto = 0;
-//        int nboletos = 0;
         String error_boleto = "";
         String error_apuesta = "";
         String pantalla2="";
-//        try {
-//             int nboletos=Integer.parseInt(boleto);
-//                out.println("Valor de nboletos: "+nboletos);
-//        } catch (Exception e) {
-//            out.println("Error primer catch");
-//        }
+        boolean hayerror=false;
+
         
         out.println("Boton 1ª Pantalla"+request.getParameter("nboletos"));
         out.println("Boton 2ª Pantalla"+request.getParameter("napuesta"));
@@ -81,40 +79,122 @@ public class LoteriaTexto extends HttpServlet {
         
         if(request.getParameter("napuesta")!="Continuar" && request.getParameter("napuesta")!=null){
                  out.println("ENTRA SEGUNDO IF");
+             //Valor para que solo se muetre la pantalla 2.
              pantalla2="ok";
-             String apuestas=request.getParameter("apuesta1");
+             //Número de boletos
              String boletos=request.getParameter("NumBoletos");
-             out.println("Numero de apuestas"+apuestas);
-             out.println("Numero de boletos: "+boletos);
-             if(apuestas==""){
+             //Número de boletos pasados a entero
+             int numbol=Integer.parseInt(boletos);
+             //Generamos array para las apuesta de cada boleto
+             String [] boletoApuesta=new String[numbol];
+             
+             for(int i=0;i<numbol;i++){
+                 //Añadimos a la palabra apuesta en numero correspondiente
+                 String apuesta="apuesta"+(i+1);
+                 //Cogemos el valor del número de apuesta de cada boleto
+                 String apuestas=request.getParameter(apuesta);
                  
-                 error_apuesta = "Debes de introducir un valor";
+                 //Número de apuetas de cada boleto
+                 boletoApuesta[i]=apuestas;
+                 if (apuestas == "") {
+                     error_apuesta = "Debes de introducir un valor";
+                     
+                     hayerror=true;
+                     
+                 }
+                 
+                 out.println("EL BOLETO "+i+"TIENE: "+apuestas);
+
+             }
+             //Si hay error en la opción del select lo mostramos por pantalla.
+             if(hayerror==true){
+                //Pasamos los datos a NumApuestas.jsp
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/NumApuestas.jsp");
+                request.setAttribute("error_apuesta", error_apuesta);
+                request.setAttribute("pantalla2", pantalla2);
+                //Redirigimos al formulario de la apuseta
+                dispatcher.forward(request, response);
+             }else{
+                 //Creamos el array donde vamos a introducir todos los datos.
+//                  ArrayList<String> array =new ArrayList<String>();
+                 int total=0;
+                 String[] arrayFinal=new String[9];
+                 //Array donde irán los números de la apuesta.
+                 String [] numApuesta=new String[7];
+                  response.setContentType("text/html;charset=UTF-8");
+                 try (PrintWriter out = response.getWriter()) {
+                   out.println("<!DOCTYPE html>");
+                    out.println("<html>");
+                    out.println("<head>");
+                    out.println("<title>Servlet prueba</title>");            
+                    out.println("</head>");
+                    out.println("<body>");
+                for(int x=0;x<boletoApuesta.length;x++){
+                    //Imprimimos el número del boleto
+                    out.println("<h1>Boleto "+(x+1)+"º </h1>");
+                  
+                    //Obtenemos el número de apuestas de cada boleto
+                    int numeroApuesta= Integer.parseInt(boletoApuesta[x]);
+//                    out.println("LOS NUMERO PARA EL BOLETO "+boletoApuesta[x]+ "QUE TIENE "+numeroApuesta+" APUESTAS");
+
+                    
+                    for(int y=0;y<numeroApuesta;y++){
+                        //Sacamos la apuseta con su número
+                         out.println("<br>Apuesta "+(y+1)+": ");
+                         //Sumamos cada apuseta en una variable TOTAL
+                         total++;
+                         
+                        for(int i=0;i<7;i++){
+                           int numeroAleatorio=(int)Math.round(Math.random()*49);
+                            if (i < 6) {
+                                if (i < 5) {
+                                    out.println(numeroAleatorio + ",");
+                                } else {
+                                    
+                                    out.println(numeroAleatorio);
+                                }
+                                   
+                            //Son los siete nuemros que generaremos para cada apuesta
+                            numApuesta[i]=numeroAleatorio+"";
+                           }else{
+//                               out.println("<br>Num Apuestas: "+numeroApuesta);
+//                               out.println("<br>Valor Y: "+(y+1));
+                               if(numeroApuesta==(y+1)){
+                                   out.println("<br>Reintegro: "+numeroAleatorio);
+                                   out.println("<br>Importe Boleto: "+(y+1)+" €");
+                                   
+                               }
+                               else{
+                                   out.println("<br>Boleto Apuestas: "+boletoApuesta.length);
+                                    out.println("<br>Valor X: "+(x));
+                                  if(boletoApuesta.length==(x+1)){
+                                      out.println("<br>Reintegro::::::::::: "+total);
+                                  } 
+                               }
+                                
+                           }
+//                           out.println("Numeros de la apueta "+(i+1)+"es:"+numApuesta[i]);
+                        }
+                        
+//                          boletoApuesta[x]=numApuesta;
+                        
+
+
+                    }
+                }
+                out.println("</body>");
+                out.println("</html>");
+                 }
+                 
              }
              
-            //Pasamos los datos a NumApuestas.jsp
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/NumApuestas.jsp");
-            request.setAttribute("error_apuesta", error_apuesta);
-            request.setAttribute("pantalla2", pantalla2);
-            dispatcher.forward(request, response);//Redirigimos al formulario de la apuseta
 
         }
-            
-      
-//        String apuestas=request.getParameter("apuestas");
-//        out.println("Las apuestas son"+apuestas);
-//        int numapuestas=Integer.parseInt(boleto);
-//        out.println("Num apuestas en int"+numapuestas);
-//        for(int i=0;i<numapuestas;i++){
+//        
+//        public void generaApuestas(){
 //            
-//           String operacion = request.getParameter("operacion+i");
-//           out.println(operacion);
 //        }
-//        
-//        
-      
-        
- 
-   
+
         
     }
 
