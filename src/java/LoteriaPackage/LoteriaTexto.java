@@ -7,6 +7,8 @@ package LoteriaPackage;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,19 +34,59 @@ public class LoteriaTexto extends HttpServlet {
         
         //Cogemos los datos del POST
         String boleto=request.getParameter("boleto");
+        String apuestas=request.getParameter("apuestas");
         
-        //Variables
+        
+          //Variables
         int numboleto = 0;
         String error_boleto = "";
+        String pantalla2="";
         
-        //Convertimos a entero
+        if(request.getParameter("nboletos")!="Continuar"){
+            
+                    //Convertimos a entero
+            try {
+               numboleto=Integer.parseInt(boleto);       
+                error_boleto = "";
+                pantalla2="ok";
+            } catch (Exception e) {               
+                error_boleto = "Debes de introducir un número";
+                pantalla2="";
+            }
+
+           //Pasamos los datos a NumApuestas.jsp
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/NumApuestas.jsp");
+
+            request.setAttribute("boleto", boleto);
+
+            request.setAttribute("error_boleto", error_boleto);
+            request.setAttribute("pantalla2", pantalla2);
+
+            dispatcher.forward(request, response);//Redirigimos al formulario de la apuseta
+            
+        } 
         
-        try {
-            numboleto=Integer.parseInt(boleto);
-            error_boleto = "";
-        } catch (Exception e) {
-            error_boleto = "Debes de introducir un número,";
+        if(request.getParameter("napuesta")!="Continuar"){
+            
+            
+        
         }
+            
+      
+//        String apuestas=request.getParameter("apuestas");
+//        out.println("Las apuestas son"+apuestas);
+//        int numapuestas=Integer.parseInt(boleto);
+//        out.println("Num apuestas en int"+numapuestas);
+//        for(int i=0;i<numapuestas;i++){
+//            
+//           String operacion = request.getParameter("operacion+i");
+//           out.println(operacion);
+//        }
+//        
+//        
+      
+        
+ 
    
         
     }
