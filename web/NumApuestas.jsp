@@ -6,6 +6,7 @@
 <%!
     String numboleto=""; 
     String verror_boleto="";
+    String verror_apuesta="";
     String pantalla2="";
 %>
 <%--Asignamos las variables si no son nulas, ya que la 1ª vez que se accede a la app son nulas --%>
@@ -15,7 +16,10 @@
    if (request.getAttribute("error_boleto") != null) {
         verror_boleto = (String) request.getAttribute("error_boleto");
     }
-      if (request.getAttribute("pantalla2") != null) {
+    if (request.getAttribute("error_apuesta") != null) {
+        verror_apuesta = (String) request.getAttribute("error_apuesta");
+    }
+    if (request.getAttribute("pantalla2") != null) {
         pantalla2 = (String) request.getAttribute("pantalla2");
     }
  
@@ -62,7 +66,7 @@
     <%if(!pantalla2.equals("")){%>
             <center>            
             <h1>Se juegan <%=numboleto%> boletos .</h1>
-            <form method="post" action="loteria">
+            <form method="get" action="loteria">
                 <%for(int i=1;i<= Integer.parseInt(numboleto);i++){%>
                     <p>
                         Boleto <%=i%> - Apuestas:
@@ -75,10 +79,18 @@
                             <option value="5">5</option>
                             <option value="6">6</option>
                         </select>
+                         <%--Si se ha producido un error, mostramos mensaje --%>
+                        <%
+                            if (!verror_apuesta.equals("") && !verror_apuesta.equals(null)) {
+                                out.println("<span class='error'>" + verror_apuesta + "</span>");
+                            }
+                        %>
                     </p>               
                 
                 <%}%>
-                    <p>
+                    <p> 
+                    <h1>NUmero boletos <%=numboleto%></h1>
+                        <input type="hidden" value="<%=numboleto%>" name="NumBoletos">
                         <input type="submit" value="Continuar" name="napuesta" >
                     </p>
             </form>

@@ -34,15 +34,28 @@ public class LoteriaTexto extends HttpServlet {
         
         //Cogemos los datos del POST
         String boleto=request.getParameter("boleto");
-        String apuestas=request.getParameter("apuestas");
+        
+       
         
         
           //Variables
         int numboleto = 0;
+//        int nboletos = 0;
         String error_boleto = "";
+        String error_apuesta = "";
         String pantalla2="";
+//        try {
+//             int nboletos=Integer.parseInt(boleto);
+//                out.println("Valor de nboletos: "+nboletos);
+//        } catch (Exception e) {
+//            out.println("Error primer catch");
+//        }
         
-        if(request.getParameter("nboletos")!="Continuar"){
+        out.println("Boton 1ª Pantalla"+request.getParameter("nboletos"));
+        out.println("Boton 2ª Pantalla"+request.getParameter("napuesta"));
+        
+        if(request.getParameter("nboletos")!="Continuar"&& request.getParameter("nboletos")!=null){
+              out.println("ENTRA PRIMER IF");
             
                     //Convertimos a entero
             try {
@@ -66,10 +79,24 @@ public class LoteriaTexto extends HttpServlet {
             
         } 
         
-        if(request.getParameter("napuesta")!="Continuar"){
-            
-            
-        
+        if(request.getParameter("napuesta")!="Continuar" && request.getParameter("napuesta")!=null){
+                 out.println("ENTRA SEGUNDO IF");
+             pantalla2="ok";
+             String apuestas=request.getParameter("apuesta1");
+             String boletos=request.getParameter("NumBoletos");
+             out.println("Numero de apuestas"+apuestas);
+             out.println("Numero de boletos: "+boletos);
+             if(apuestas==""){
+                 
+                 error_apuesta = "Debes de introducir un valor";
+             }
+             
+            //Pasamos los datos a NumApuestas.jsp
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/NumApuestas.jsp");
+            request.setAttribute("error_apuesta", error_apuesta);
+            request.setAttribute("pantalla2", pantalla2);
+            dispatcher.forward(request, response);//Redirigimos al formulario de la apuseta
+
         }
             
       
