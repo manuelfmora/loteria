@@ -5,16 +5,16 @@
         <servlet-class>LoteriaPackage.LoteriaTexto</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>prueba</servlet-name>
-        <servlet-class>LoteriaPackage.prueba</servlet-class>
+        <servlet-name>Grafico</servlet-name>
+        <servlet-class>LoteriaPackage.Grafico</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoteriaTexto</servlet-name>
         <url-pattern>/loteria</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>prueba</servlet-name>
-        <url-pattern>/prueba</url-pattern>
+        <servlet-name>Grafico</servlet-name>
+        <url-pattern>/grafico</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

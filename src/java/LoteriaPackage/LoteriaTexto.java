@@ -126,7 +126,8 @@ public class LoteriaTexto extends HttpServlet {
                  //Array donde irán los números de la apuesta.
                  String [] numApuesta=new String[7];
                  
-                  response.setContentType("text/html;charset=UTF-8");
+                 //Creamos la página en html
+                 response.setContentType("text/html;charset=UTF-8");
                  try (PrintWriter out = response.getWriter()) {
                    out.println("<!DOCTYPE html>");
                     out.println("<html>");
@@ -181,10 +182,10 @@ public class LoteriaTexto extends HttpServlet {
 
                     }
                 }
-                out.println("<p>El importe <strong>Total</strong> que debe abonar son: "+total+" €</p>");
+                out.println("<p><big>El importe <strong>Total</strong> que debe abonar son: "+total+" €</big></p>");
                 out.println("</body>");
                 out.println("</html>");
-                 }
+                 }//Fin de la página en html
                  
              }
              

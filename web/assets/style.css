@@ -40,3 +40,22 @@ tr.todas {
     border: 1px solid #000;
     padding: 5px;
 }
+
+/*Generamos tablas con DIV*/
+.contenedor-tabla{
+
+display: table;
+
+}
+
+.contenedor-fila{
+
+display: table-row;
+
+}
+
+.contenedor-columna{
+
+display: table-cell;
+
+}
