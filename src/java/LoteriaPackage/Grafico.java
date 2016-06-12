@@ -66,13 +66,13 @@ public class Grafico extends HttpServlet {
         
         for (int i = 1; i <= 50; i++) {
 
-            //Para que muestre dos líneas
+            //Solo entra la promera vez......
             if (i == 1) {
-                html += "<tr><!--Inicio 1 tr-->";//primer TR
+                html += "<tr><!--INICIO TRRRR-->";//primer TR
 
             }
 
-            html += "<td><!--Inicio 1 TD-->";
+            html += "<td><!--INICIO TD-->";
             if (i == 1) {
                 html += "1";
             }//Dibuja los números del boleto
@@ -97,7 +97,7 @@ public class Grafico extends HttpServlet {
                 html += (decena - 8) + "2";
                 decena++;
             }
- if (i == 16) {
+            if (i == 16) {
                 html += "3";
             }
             if (i > 16 && i < 21) {
@@ -105,7 +105,7 @@ public class Grafico extends HttpServlet {
                 html += (decena - 12) + "3";
                 decena++;
             }
-             if (i == 21) {
+            if (i == 21) {
                 html += "4";
             }
 
@@ -114,7 +114,7 @@ public class Grafico extends HttpServlet {
                 html += (decena - 16) + "4";
                 decena++;
             }
-              if (i == 26) {
+            if (i == 26) {
                 html += "5";
             }
             if (i > 26 && i < 31) {
@@ -122,7 +122,7 @@ public class Grafico extends HttpServlet {
                 html += (decena - 20) + "5";
                 decena++;
             }
-              if (i == 31) {
+            if (i == 31) {
                 html += "6";
             }
             if (i > 31 && i < 36) {
@@ -130,7 +130,7 @@ public class Grafico extends HttpServlet {
                 html += (decena - 24) + "6";
                 decena++;
             }
-              if (i == 36) {
+            if (i == 36) {
                 html += "7";
             }
             if (i > 36 && i < 41) {
@@ -138,14 +138,14 @@ public class Grafico extends HttpServlet {
                 html += (decena - 28) + "7";
                 decena++;
             }
-              if (i == 41) {
+            if (i == 41) {
                 html += "8";
             }
             if (i > 41 && i < 46) {
 
                 html += (decena - 32) + "8";
                 decena++;
-            }  
+            }
             if (i == 46) {
                 html += "9";
             }
@@ -155,10 +155,10 @@ public class Grafico extends HttpServlet {
                 decena++;
             }
 
-            html += "</td><!-- / Inicio 1 TD-->";
+            html += "</td><!--FIN TD-->";
 
             if (i % 5 == 0) {
-                html += "</tr><!--/ Inicio 1 tr-->";//fin primer TR
+                html += "</tr><!--FIN TRRRRRRRRRRRRR-->";//fin primer TR
             }
 
         }
