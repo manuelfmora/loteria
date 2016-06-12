@@ -117,10 +117,15 @@ public class LoteriaTexto extends HttpServlet {
              }else{
                  //Creamos el array donde vamos a introducir todos los datos.
 //                  ArrayList<String> array =new ArrayList<String>();
+
+//                 //Importe del boleto
+//                 int importeBoleto=0;
+                 //Importe Total
                  int total=0;
                  String[] arrayFinal=new String[9];
                  //Array donde irán los números de la apuesta.
                  String [] numApuesta=new String[7];
+                 
                   response.setContentType("text/html;charset=UTF-8");
                  try (PrintWriter out = response.getWriter()) {
                    out.println("<!DOCTYPE html>");
@@ -164,13 +169,7 @@ public class LoteriaTexto extends HttpServlet {
                                    out.println("<br>Importe Boleto: "+(y+1)+" €");
                                    
                                }
-                               else{
-                                   out.println("<br>Boleto Apuestas: "+boletoApuesta.length);
-                                    out.println("<br>Valor X: "+(x));
-                                  if(boletoApuesta.length==(x+1)){
-                                      out.println("<br>Reintegro::::::::::: "+total);
-                                  } 
-                               }
+                             
                                 
                            }
 //                           out.println("Numeros de la apueta "+(i+1)+"es:"+numApuesta[i]);
@@ -182,6 +181,7 @@ public class LoteriaTexto extends HttpServlet {
 
                     }
                 }
+                out.println("<p>El importe <strong>Total</strong> que debe abonar son: "+total+" €</p>");
                 out.println("</body>");
                 out.println("</html>");
                  }
@@ -190,10 +190,6 @@ public class LoteriaTexto extends HttpServlet {
              
 
         }
-//        
-//        public void generaApuestas(){
-//            
-//        }
 
         
     }
