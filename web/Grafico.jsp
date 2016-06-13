@@ -1,4 +1,4 @@
-<%-- 
+.<%-- 
     Document   : Grafico
     Created on : 12-jun-2016, 10:40:20
     Author     : Manuel Mora
@@ -22,95 +22,33 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Modo Gráfico</title>
     </head>
-    <body>
-        <form action="grafico" method="post">
-            <input type="submit" name="" value="Aceptar"/>
-        </form>
+    <body>      
 
-           <%--Mostramos la tabla generada --%>
-        <%  if (!tabla.equals("")) {
-                out.println(tabla);
-            }
-        %>
-        
-        <%--     <table border="1">
-            
-            <tr><!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-                <%for(int i=0;i<3;i++){%>
-                <td>1</td>
-                 <%}%>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-            </tr>
-             
+        <% int apuesta=1; %>
+        <table border="1">
+            <% for(int fila=0; fila<10; fila++) { %>
             <tr>
-                <td>1</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-            </tr>
+                <%  for(int col=0; col<5; col++) { %>
+                <td> <% 
+                    if (fila==0 && col==0) {
+                       out.print(apuesta);
+                    }
+                    else {
+                        int num=col*10+fila;
+                        /*
+                        if (num  esta en ListaApuestas) {
+                            muestro seleccionado
+                        else
+                            muestro normal
+                        }
+                        */
+                        out.print(num);
+                    } %>
+                </td>
+                <%} %>
             <tr>
-                <td>2</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-            </tr>
-            <tr>
-                <td>9</td>
-                <td>pie</td>
-                <td>pie</td>
-                <td>pie</td>
-                <td>pie</td>
-            </tr>
-            
-        </table>-->
-     --%> 
+            <%} %>
+        </table>
 
     </body>
 </html>
