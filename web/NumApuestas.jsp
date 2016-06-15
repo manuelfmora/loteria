@@ -88,8 +88,7 @@
                     </p>               
                 
                 <%}%>
-                    <p> 
-                    <h1>NUmero boletos <%=numboleto%></h1>
+                    <p>                     
                         <input type="hidden" value="<%=numboleto%>" name="NumBoletos">
                         <input type="submit" value="Continuar" name="napuesta" >
                     </p>

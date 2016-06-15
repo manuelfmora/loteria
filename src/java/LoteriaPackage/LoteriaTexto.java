@@ -85,6 +85,7 @@ public class LoteriaTexto extends HttpServlet {
              String boletos=request.getParameter("NumBoletos");
              //Número de boletos pasados a entero
              int numbol=Integer.parseInt(boletos);
+ //------------------------ GENERAMOS ARRAY CON LOS NUMEROS DE APUESTAS ---------------------------------------              
              //Generamos array para las apuesta de cada boleto
              String [] boletoApuesta=new String[numbol];
              
@@ -114,12 +115,9 @@ public class LoteriaTexto extends HttpServlet {
                 request.setAttribute("pantalla2", pantalla2);
                 //Redirigimos al formulario de la apuseta
                 dispatcher.forward(request, response);
+    //------------------------ / GENERAMOS ARRAY CON LOS NUMEROS DE APUESTAS ---------------------------------------
              }else{
-                 //Creamos el array donde vamos a introducir todos los datos.
-//                  ArrayList<String> array =new ArrayList<String>();
 
-//                 //Importe del boleto
-//                 int importeBoleto=0;
                  //Importe Total
                  int total=0;
                  String[] arrayFinal=new String[9];
@@ -135,6 +133,7 @@ public class LoteriaTexto extends HttpServlet {
                     out.println("<title>Servlet prueba</title>");            
                     out.println("</head>");
                     out.println("<body>");
+                 //RECORREMOS EL NUMERO DE BOLETOS
                 for(int x=0;x<boletoApuesta.length;x++){
                     //Imprimimos el número del boleto
                     out.println("<h1>Boleto "+(x+1)+"º </h1>");
@@ -143,13 +142,13 @@ public class LoteriaTexto extends HttpServlet {
                     int numeroApuesta= Integer.parseInt(boletoApuesta[x]);
 //                    out.println("LOS NUMERO PARA EL BOLETO "+boletoApuesta[x]+ "QUE TIENE "+numeroApuesta+" APUESTAS");
 
-                    
+                    //RECORREMOS EL NUMERO DE APUESTA DE CADA BOLETO
                     for(int y=0;y<numeroApuesta;y++){
-                        //Sacamos la apuseta con su número
+                        //Sacamos la apuesta con su número
                          out.println("<br>Apuesta "+(y+1)+": ");
                          //Sumamos cada apuseta en una variable TOTAL
                          total++;
-                         
+                         //A CADA APUESTA LE INSERTAMOS 5 NÚMEROS Y EL REINTEGRO
                         for(int i=0;i<7;i++){
                            int numeroAleatorio=(int)Math.round(Math.random()*49);
                             if (i < 6) {

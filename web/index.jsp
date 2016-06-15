@@ -17,7 +17,8 @@
         <h1><u>MENÚ</u></h1>
         <li><a href="NumApuestas.jsp">Modo Texto</a></li>
         <li><a href="Grafico.jsp">Modo Gráfico</a></li>
-        <li><a href="LogOut">Cerrar Sesión</a></li>
+        <li><a href="apuestas.jsp">Apuesta</a></li>
+        <%--  <li><a href="LogOut">Cerrar Sesión</a></li>--%>
         <hr size="16px" color="black" />
     </center>
 

@@ -31,140 +31,181 @@ public class Grafico extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         //Cogemos los datos del POST
+        String boleto=request.getParameter("boleto");
         
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/Grafico.jsp");
-     
-        String tabla = Tablas();
-        request.setAttribute("tabla", tabla);
-        dispatcher.forward(request, response);//Redirigimos al formulario de la tabla de multiplicar
-//        response.setContentType("text/html;charset=UTF-8");
-//        try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet Grafico</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet Grafico at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
-//        }
-    }
-
-    /**
-     * Devuelve las tablas del 1 al 10
-     *
-     * @return HTML generado de la tabla
-     */
-    protected String Tablas() {
-
-        String html = "";
-        int decena=1;
-
-        html += "<table border= '1'>";
+       
         
-        for (int i = 1; i <= 50; i++) {
+        
+          //Variables
+        int numboleto = 0;
+        String error_boleto = "";
+        String error_apuesta = "";
+        String pantalla2="";
+        String pantalla3="";
+        int numbol=0;//numeros boletos
+        int napuestas=0;//numero apuestas
+        boolean hayerror=false;
 
-            //Solo entra la promera vez......
-            if (i == 1) {
-                html += "<tr><!--INICIO TRRRR-->";//primer TR
-
-            }
-
-            html += "<td><!--INICIO TD-->";
-            if (i == 1) {
-                html += "1";
-            }//Dibuja los números del boleto
-            if (i > 1 && i < 6) {
-                html += decena + "0";
-                decena++;
-            }
-            //Dibuja el primer uno de la izquierda
-            if (i == 6) {
-                html += "1";
-            }
-            if (i > 6 && i < 11) {
-
-                html += (decena - 4) + "1";
-                decena++;
-            }
-            if (i == 11) {
-                html += "2";
-            }
-            if (i > 11 && i < 16) {
-
-                html += (decena - 8) + "2";
-                decena++;
-            }
-            if (i == 16) {
-                html += "3";
-            }
-            if (i > 16 && i < 21) {
-
-                html += (decena - 12) + "3";
-                decena++;
-            }
-            if (i == 21) {
-                html += "4";
+        
+        out.println("Boton 1ª Pantalla"+request.getParameter("nboletos"));
+        out.println("Boton 2ª Pantalla"+request.getParameter("napuesta"));
+        
+        if(request.getParameter("nboletos")!="Continuar"&& request.getParameter("nboletos")!=null){
+              out.println("ENTRA PRIMER IF");
+            
+                    //Convertimos a entero
+            try {
+               numboleto=Integer.parseInt(boleto);       
+                error_boleto = "";
+                pantalla2="ok";
+            } catch (Exception e) {               
+                error_boleto = "Debes de introducir un número";
+                pantalla2="";
             }
 
-            if (i > 21 && i < 26) {
+           //Pasamos los datos a NumApuestas.jsp
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/Grafico.jsp");
 
-                html += (decena - 16) + "4";
-                decena++;
-            }
-            if (i == 26) {
-                html += "5";
-            }
-            if (i > 26 && i < 31) {
+            request.setAttribute("boleto", boleto);
 
-                html += (decena - 20) + "5";
-                decena++;
-            }
-            if (i == 31) {
-                html += "6";
-            }
-            if (i > 31 && i < 36) {
+            request.setAttribute("error_boleto", error_boleto);
+            request.setAttribute("pantalla2", pantalla2);
 
-                html += (decena - 24) + "6";
-                decena++;
-            }
-            if (i == 36) {
-                html += "7";
-            }
-            if (i > 36 && i < 41) {
+            dispatcher.forward(request, response);//Redirigimos al formulario de la apuseta
+            
+        } 
+        
+        if(request.getParameter("napuesta")!="Continuar" && request.getParameter("napuesta")!=null){
+                 out.println("ENTRA SEGUNDO IF");
+             //Valor para que solo se muetre la pantalla 2.
+             pantalla2="ok";
+             //Número de boletos
+             String boletos=request.getParameter("NumBoletos");
+             
+             //Número de boletos pasados a entero
+             
+             numbol=Integer.parseInt(boletos);
+             
+//------------------------ GENERAMOS ARRAY CON LOS NUMEROS DE APUESTAS ---------------------------------------             
+             //Generamos array para las apuesta de cada boleto
+             String [] boletoApuesta=new String[numbol];
+             
+             for(int i=0;i<numbol;i++){
+                 //Añadimos a la palabra apuesta en numero correspondiente
+                 String apuesta="apuesta"+(i+1);
+                 //Cogemos el valor del número de apuesta de cada boleto
+                 String apuestas=request.getParameter(apuesta);
+                 //CREAMOS ARRAY BOLETO APUESTA EN EL QUE VAN LOS NÚMEROS DE BOLETOS
+                 //Número de apuetas de cada boleto
+                 boletoApuesta[i]=apuestas;
+                 if (apuestas == "") {
+                     error_apuesta = "Debes de introducir un valor";
+                     
+                     hayerror=true;
+                     
+                 }
+                 
+//                 out.println("EL BOLETO "+i+"TIENE: "+apuestas);
 
-                html += (decena - 28) + "7";
-                decena++;
-            }
-            if (i == 41) {
-                html += "8";
-            }
-            if (i > 41 && i < 46) {
+             }
+             //Si hay error en la opción del select lo mostramos por pantalla.
+             if(hayerror==true){
+                //Pasamos los datos a NumApuestas.jsp
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/Grafico.jsp");
+                request.setAttribute("error_apuesta", error_apuesta);
+                request.setAttribute("pantalla2", pantalla2);
+                //Redirigimos al formulario de la apuseta
+                dispatcher.forward(request, response);
+                
+        //------------------------ / GENERAMOS ARRAY CON LOS NUMEROS DE APUESTAS ---------------------------------------
+             }else{
+                 int totalApuestas=0;
+                for(int i=0;i<boletoApuesta.length;i++){
+                  int a=   Integer.parseInt(boletoApuesta[i]);
+                  totalApuestas+=a;
+                }
+                 //Importe Total
+                 int total=0;                
+                 //Array donde irán los números de la apuesta.
+                 String [] numApuesta=new String[7];               
 
-                html += (decena - 32) + "8";
-                decena++;
-            }
-            if (i == 46) {
-                html += "9";
-            }
-            if (i > 46 && i < 51) {
 
-                html += (decena - 36) + "9";
-                decena++;
-            }
+                  //Número de apuestas
+                  napuestas=boletoApuesta.length;
+                 
+                     //RECORREMOS EL NUMERO DE BOLETOS
+                for( int x=0;x<boletoApuesta.length;x++){
+                    
+                    //Imprimimos el número del boleto
+                    out.println("<h1>Boleto "+(x+1)+"º </h1>");
+                    int[] [][] BOLETO_FINAL =new int[numbol][totalApuestas][7];
+                      BOLETO_FINAL[x][0][0]=x;
+                  
+                    //Obtenemos el número de apuestas de cada boleto
+                    int numeroApuesta= Integer.parseInt(boletoApuesta[x]);
+//                    out.println("LOS NUMERO PARA EL BOLETO "+boletoApuesta[x]+ "QUE TIENE "+numeroApuesta+" APUESTAS");
+                      
+                     //RECORREMOS EL NUMERO DE APUESTA DE CADA BOLETO
+                    for(int y=0;y<numeroApuesta;y++){
+                        BOLETO_FINAL[x][y][0]=y;
+                        //Sacamos la apuseta con su número
+                         out.println("<br>Apuesta "+(y+1)+": ");
+                         //Sumamos cada apuseta en una variable TOTAL
+                         total++;
+                         //A CADA APUESTA LE INSERTAMOS 5 NÚMEROS Y EL REINTEGRO
+                        for(int i=0;i<7;i++){
+                           int numeroAleatorio=(int)Math.round(Math.random()*49);
+                           BOLETO_FINAL[x][y][i]=numeroAleatorio;
+                            if (i < 6) {
+                                if (i < 5) {
+                                    out.println(numeroAleatorio + ",");
+                                } else {
+                                    
+                                    out.println(numeroAleatorio);
+                                }
+                                   
+                            //Son los siete nuemros que generaremos para cada apuesta
+                            numApuesta[i]=numeroAleatorio+"";
+                           }else{
+//                               out.println("<br>Num Apuestas: "+numeroApuesta);
+//                               out.println("<br>Valor Y: "+(y+1));
+                               if(numeroApuesta==(y+1)){
+                                   out.println("<br>Reintegro: "+numeroAleatorio);
+                                   out.println("<br>Importe Boleto: "+(y+1)+" €");
+                                   
+                               }
+                             
+                                
+                           }
+//                           out.println("Numeros de la apueta "+(i+1)+"es:"+numApuesta[i]);
+                        }
+                        
+//                          boletoApuesta[x]=numApuesta;
+                        
 
-            html += "</td><!--FIN TD-->";
 
-            if (i % 5 == 0) {
-                html += "</tr><!--FIN TRRRRRRRRRRRRR-->";//fin primer TR
-            }
+                    }
+                }//---------------->primer for
+                pantalla3="ok";
+                                //Pasamos los datos a NumApuestas.jsp
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/Grafico.jsp");
+                request.setAttribute("pantalla3",pantalla3);//Activamos la pantalla 3
+                request.setAttribute("numbol",numbol);//Número boletos
+                request.setAttribute("napuestas",napuestas);//Número apuestas              
+                request.setAttribute("total",total);//Importe total
+                request.setAttribute("BOLETO_FINAL", BOLETO_FINAL);//Array multidimencional
+//                request.setAttribute("total",total);
+                //Redirigimos al formulario de la apuseta
+                dispatcher.forward(request, response);
+
+                 
+             }
+             
 
         }
-    
-        html += "</table>";
-        return html;
+
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
